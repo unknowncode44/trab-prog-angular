@@ -9,5 +9,7 @@ export class RegisterComponent {
   
   onSubmit(){}
 
+  login(){}
+
 }
 
