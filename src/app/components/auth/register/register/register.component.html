@@ -1,5 +1,10 @@
 <body>
-
+  <!-- loading spinner -->
+<div *ngIf="loading" class="overlay">
+  <div class="spinner-border text-secondary" role="status">
+    <span class="sr-only">Cargando...</span>
+  </div>
+</div>
   <div class="wrapper">
     <div class="container-fluid py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -8,7 +13,7 @@
             <div class="card-body p-5">
   
               <div class="mb-md-5 mx-auto mt-md-4 pb-2">
-                <form ngSubmit="onSubmit()" [formGroup]="registerForm">
+                <form [formGroup]="registerForm">
                   <h2 class="fw-bold mb-2 text-uppercase text-center">Registro</h2>
                   <p class="text-white-50 mb-4 text-center">Por favor ingresa tus datos</p>
   
@@ -33,14 +38,17 @@
                   <div class="form-outline form-white mb-2">
                     <label class="form-label text-secondary" for="confirmPassword">Confirmar Contraseña</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" required formControlName="repeatPassword" class="form-control form-control-lg" />
-                    <div *ngIf="registerForm.get('repeatPassword')!.invalid && registerForm.get('repeatPassword')!.touched">
+                    <div *ngIf="registerForm.get('repeatPassword')!.invalid && registerForm.get('repeatPassword')!.touched || registerForm.hasError('passwordMismatch')">
                       <div *ngIf="registerForm.get('repeatPassword')!.errors?.['required']" class="text-danger">Contraseña es necesaria</div>
                       <div *ngIf="registerForm.get('repeatPassword')!.errors?.['minlength']" class="text-danger">Contraseña debe contener al menos 6 caracteres</div>
+                      <div *ngIf="registerForm.hasError('passwordMismatch')" class="text-danger">Contraseñas no coinciden</div>
+                      
                     </div>
+                    <div *ngIf="!registerForm.hasError('passwordMismatch') && !registerForm.get('repeatPassword')!.errors?.['required']" class="text-success">Contraseñas coinciden</div>
                   </div>
   
                   <div class="btn-container w-100 text-center py-4">
-                    <button class="btn btn-outline-light btn-lg mx-auto" [disabled]="!registerForm.valid" type="submit">Registrate!</button>
+                    <button class="btn btn-outline-light btn-lg mx-auto" [disabled]="!registerForm.valid" (click)="onSubmit()" type="button">Registrate!</button>
                   </div>
                  
                 </form>

@@ -7,12 +7,19 @@ import { HttpClientModule     } from '@angular/common/http';
 // componentes del modulo
 import { LoginComponent     } from '../../components/auth/login/login/login.component';
 import { RegisterComponent  } from '../../components/auth/register/register/register.component';
-import { AuthService } from 'src/app/services/auth/auth.service';
+
+// servicios del modulo
+import { AuthService    } from '../../services/auth/auth.service';
+import { LoadingService } from '../../shared/services/loading.service';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [
+    LoginComponent, 
+    RegisterComponent
+  ],
+
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -23,6 +30,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService]
+
+  providers: [
+    AuthService, 
+  ]
 })
 export class AuthModule { }

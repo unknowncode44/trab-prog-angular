@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 
 // modulos propios
 import { AuthModule } from './modules/auth/auth.module';
-import { AuthService } from './services/auth/auth.service';
+import { LoadingService } from './shared/services/loading.service';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { AuthService } from './services/auth/auth.service';
     AppRoutingModule,
     AuthModule,
   ],
-  providers: [],
+  providers: [LoadingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
