@@ -1,44 +1,57 @@
 <body>
 
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-dark text-white" style="border-radius: 1rem;">
-          <div class="card-body p-5 text-center">
-
-            <div class="mb-md-5 mt-md-4 pb-5">
-              <form ngSubmit="onSubmit()">
-                <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
-                <p class="text-white-50 mb-5">Please register to continue!</p>
-
-                <div class="form-outline form-white mb-4">
-                  <input type="email" id="email" name="email" required class="form-control form-control-lg" />
-                  <label class="form-label" for="email">Email</label>
-                </div>
-
-                <div class="form-outline form-white mb-4">
-                  <input type="password" id="password" name="password" required class="form-control form-control-lg" />
-                  <label class="form-label" for="password">Password</label>
-                </div>
-
-                <div class="form-outline form-white mb-4">
-                  <input type="password" id="confirmPassword" name="confirmPassword" required class="form-control form-control-lg" />
-                  <label class="form-label" for="confirmPassword">Confirm Password</label>
-                </div>
-
-
-                <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
-
-                <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
-
-              </form>
+  <div class="wrapper">
+    <div class="container-fluid py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5">
+  
+              <div class="mb-md-5 mx-auto mt-md-4 pb-2">
+                <form ngSubmit="onSubmit()" [formGroup]="registerForm">
+                  <h2 class="fw-bold mb-2 text-uppercase text-center">Registro</h2>
+                  <p class="text-white-50 mb-4 text-center">Por favor ingresa tus datos</p>
+  
+                  <div class="form-outline form-white mb-4">
+                    <label class="form-label text-secondary" for="email">Email</label>
+                    <input type="email" id="email" name="email" formControlName="email" required class="form-control form-control-lg" />
+                    <div *ngIf="registerForm.get('email')!.invalid && registerForm.get('email')!.touched">
+                      <div *ngIf="registerForm.get('email')!.errors?.['required']" class="text-danger">Email es necesario</div>
+                      <div *ngIf="registerForm.get('email')!.errors?.['email']" class="text-danger">Formato Invalido</div>
+                    </div>
+                  </div>
+  
+                  <div class="form-outline form-white mb-4">
+                    <label class="form-label text-secondary" for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required formControlName="password" class="form-control form-control-lg" />
+                    <div *ngIf="registerForm.get('password')!.invalid && registerForm.get('password')!.touched">
+                      <div *ngIf="registerForm.get('password')!.errors?.['required']" class="text-danger">Contraseña es necesaria</div>
+                      <div *ngIf="registerForm.get('password')!.errors?.['minlength']" class="text-danger">Contraseña debe contener al menos 6 caracteres</div>
+                    </div>
+                  </div>
+  
+                  <div class="form-outline form-white mb-2">
+                    <label class="form-label text-secondary" for="confirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required formControlName="repeatPassword" class="form-control form-control-lg" />
+                    <div *ngIf="registerForm.get('repeatPassword')!.invalid && registerForm.get('repeatPassword')!.touched">
+                      <div *ngIf="registerForm.get('repeatPassword')!.errors?.['required']" class="text-danger">Contraseña es necesaria</div>
+                      <div *ngIf="registerForm.get('repeatPassword')!.errors?.['minlength']" class="text-danger">Contraseña debe contener al menos 6 caracteres</div>
+                    </div>
+                  </div>
+  
+                  <div class="btn-container w-100 text-center py-4">
+                    <button class="btn btn-outline-light btn-lg mx-auto" [disabled]="!registerForm.valid" type="submit">Registrate!</button>
+                  </div>
+                 
+                </form>
+              </div>
+  
+              <div>
+                <p class="mb-0 text-center">Ya tienes una cuenta? <a routerLink="/auth/login" class="text-white-50 fw-bold"> Ingresa!</a>
+                </p>
+              </div>
+  
             </div>
-
-            <div>
-              <p class="mb-0">You already have an account? <a routerLink="/auth/login" class="text-white-50 fw-bold">Sign In</a>
-              </p>
-            </div>
-
           </div>
         </div>
       </div>

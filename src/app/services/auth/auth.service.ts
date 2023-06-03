@@ -5,9 +5,7 @@ import { Observable   } from 'rxjs';
 import { Credentials  } from '../../shared/models/credentials.model';
 import { User         } from '../../shared/models/user.model';
 
-@Injectable({
-  providedIn: AuthModule
-})
+@Injectable()
 export class AuthService {
 
   apiUrl: string = ''
@@ -20,7 +18,7 @@ export class AuthService {
     return this.http.post(this.apiUrl, credentials)
   }
 
-  register(user: User): Observable<User>{
-    return this.http.post<User>(this.apiUrl, user)
+  register(credentials: Credentials): Observable<any>{
+    return this.http.post<any>(this.apiUrl, credentials)
   }
 }
