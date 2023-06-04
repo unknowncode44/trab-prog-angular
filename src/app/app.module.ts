@@ -5,23 +5,24 @@ import { AppComponent } from './app.component';
 
 // modulos propios
 import { AuthModule } from './modules/auth/auth.module';
-import { HomeComponent } from './components/home/home.component';
+import { HomeModule } from './modules/home/home.module';
 
 // servicios compartidos
 import { LoadingService } from './shared/services/loading.service';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
   ],
 
   imports: [
     BrowserModule,
     AppRoutingModule,
     AuthModule,
+    HomeModule
   ],
 
   providers: [LoadingService],
