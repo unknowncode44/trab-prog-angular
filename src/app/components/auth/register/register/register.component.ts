@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit     } from '@angular/core';
-import { Router                               } from '@angular/router'
+import { Component, OnInit } from '@angular/core';
+import { Router            } from '@angular/router'
 
 // formularios reactivos
 import { 
@@ -8,14 +8,12 @@ import {
   FormGroup, 
   Validators                  } from '@angular/forms';
 
-// operadores rxjs
-import { delay } from 'rxjs';
 
 // servicio de autenticacion  
 import { AuthService  } from '../../../../services/auth/auth.service';
-// servicio de loading
-import { LoadingService } from '../../../../shared/services/loading.service';
-import { Credentials } from 'src/app/shared/models/credentials.model';
+
+// modelos
+import { Credentials } from '../../../../shared/models/credentials.model';
 
 
 @Component({
@@ -23,20 +21,19 @@ import { Credentials } from 'src/app/shared/models/credentials.model';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, AfterViewInit{
+export class RegisterComponent implements OnInit{
 
   // formularios reactivos
   registerForm!: FormGroup
 
   // spinner
-  loading:boolean = false
+  loading: boolean = false
 
   constructor(
 
     private auth  : AuthService,
     private router: Router,
     private formsBuilder: FormBuilder,
-    private _loading: LoadingService 
 
     ){}
   
@@ -52,11 +49,7 @@ export class RegisterComponent implements OnInit, AfterViewInit{
       this.registerForm.setValidators(this.passwordMatchValidator);
   }
 
-  ngAfterViewInit(): void {
-      this._loading.httpProgress().subscribe((status: boolean) => {
-        this.loading = status
-      })
-  }
+
 
 
   onSubmit(){
@@ -64,19 +57,16 @@ export class RegisterComponent implements OnInit, AfterViewInit{
     username: this.registerForm.value.email,
     password: this.registerForm.value.password
     }
-    console.info(credentials)
     this.register(credentials)
-
   }
 
 
-  register(credentials: Credentials){
+  private register(credentials: Credentials){
     this.loading = true
     this.auth.register(credentials).subscribe(
       {
         next: (user) => {
-          console.log(user)
-          
+          this.router.navigate(['home'])
         },
         error: (error) => {
           console.error(error)
@@ -91,7 +81,7 @@ export class RegisterComponent implements OnInit, AfterViewInit{
     )
   }
 
-  passwordMatchValidator(control: AbstractControl) : {[key: string] : boolean} | null {
+  private passwordMatchValidator(control: AbstractControl) : {[key: string] : boolean} | null {
     const password = control.get('password')!;
     const repeatPassword = control.get('repeatPassword')!;
 
